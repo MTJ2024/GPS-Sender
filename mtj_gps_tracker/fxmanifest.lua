@@ -17,7 +17,8 @@ client_scripts {
 }
 
 server_scripts {
-    'server.lua'
+    'server.lua',
+    'items.lua'
 }
 
 ui_page 'html/index.html'
