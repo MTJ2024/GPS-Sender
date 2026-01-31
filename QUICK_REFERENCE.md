@@ -2,14 +2,13 @@
 
 ## 🎯 Übersicht
 
-### Verfügbare Tracker-Typen
+### Verfügbare Tracker-Typen (Illegales System)
 
 | Typ | Icon | Laufzeit | Preis | Verwendung |
 |-----|------|----------|-------|------------|
-| **Basic** | ⏱️ | 5 Min | 2.500€ | Schnelle Jobs, Kurzverfolgungen |
-| **Standard** | 📍 | 10 Min | 5.000€ | Standard-Überwachung, ausgewogen |
-| **Advanced** | 🎯 | 15 Min | 8.000€ | Längere Verfolgungen, bessere Qualität |
-| **Premium** | 💎 | 30 Min | 15.000€ | Profi-Jobs, maximale Laufzeit |
+| **1 Stunde** | ⏱️ | 60 Min | 10.000€ | Kurzzeitüberwachung, schnelle Jobs |
+| **24 Stunden** | 📅 | 1 Tag | 25.000€ | Ganztägige Überwachung, intensive Verfolgung |
+| **Permanent** | 💎 | 7 Tage | 50.000€ | Langzeit-Überwachung, Dauertracking |
 
 ## 🎮 Steuerung & Bedienung
 
@@ -77,7 +76,7 @@
 
 ✅ **GPS Remover dabei haben:**
    - Sofortige Entfernung möglich
-   - Kostet 3.000€ im Shop
+   - Kostet 5.000€ im Schwarzmarkt
 
 ✅ **Auf Timer achten:**
    - Wenn Timer läuft → Du wirst getrackt!
@@ -85,15 +84,15 @@
 ## 🛒 Einkaufen
 
 ### Items kaufen
-Suche den **GPS & Elektronik Shop** auf der Karte:
-- 🗺️ Blip: Kleines Elektronik-Symbol
-- 📍 Position: Meist in der Stadt
+Suche den **Schwarzmarkt** auf (illegales System!):
+- 🗺️ Blip: Rotes Symbol
+- 📍 Position: Versteckte Location
 
-### Preise
-- GPS-Tracker Basic: **2.500€**
-- GPS-Tracker Standard: **5.000€**
-- GPS-Tracker Advanced: **8.000€**
-- GPS-Tracker Premium: **15.000€**
+### Preise (Schwarzmarkt)
+- GPS-Tracker 1 Stunde: **10.000€**
+- GPS-Tracker 24 Stunden: **25.000€**
+- GPS-Tracker Permanent: **50.000€**
+- GPS Remover Tool: **5.000€**
 - GPS Remover Tool: **3.000€**
 
 ## ⚠️ Wichtige Hinweise
@@ -126,7 +125,7 @@ Suche den **GPS & Elektronik Shop** auf der Karte:
 ## 🔧 Fehlerbehebung
 
 ### "Keine GPS-Tracker im Inventar"
-→ Kaufe Tracker im Shop oder nutze `/giveitem`
+→ Kaufe Tracker im Schwarzmarkt oder nutze `/giveitem`
 
 ### "Menü öffnet sich nicht"
 → Prüfe ox_lib Installation: `restart ox_lib`
@@ -141,35 +140,34 @@ Suche den **GPS & Elektronik Shop** auf der Karte:
 
 ### Items geben (zum Testen)
 ```
-/giveitem [name] gps_tracker_basic [anzahl]
-/giveitem [name] gps_tracker_standard [anzahl]
-/giveitem [name] gps_tracker_advanced [anzahl]
-/giveitem [name] gps_tracker_premium [anzahl]
+/giveitem [name] gps_tracker_1h [anzahl]
+/giveitem [name] gps_tracker_24h [anzahl]
+/giveitem [name] gps_tracker_permanent [anzahl]
 /giveitem [name] gps_remover [anzahl]
 ```
 
 ### Beispiel
 ```
-/giveitem max_mustermann gps_tracker_standard 3
+/giveitem max_mustermann gps_tracker_24h 2
 ```
 
 ## 🎯 Szenarien
 
-### Szenario 1: Schnelle Verfolgung
-**Situation:** Auto-Dieb klaut Fahrzeug
-**Lösung:** GPS-Tracker Basic (5 Min) → Schnell & günstig
+### Szenario 1: Kurze Überwachung
+**Situation:** Schnelle Info-Beschaffung
+**Lösung:** GPS-Tracker 1 Stunde (60 Min) → Perfekt für kurze Jobs
 
-### Szenario 2: Gang-Überwachung
-**Situation:** Verdächtige Gang-Aktivität
-**Lösung:** GPS-Tracker Premium (30 Min) → Lange Beobachtung
+### Szenario 2: Ganztägige Überwachung
+**Situation:** Verdächtige Gang-Aktivität über den Tag
+**Lösung:** GPS-Tracker 24 Stunden → Komplette Tagesüberwachung
 
-### Szenario 3: Schutz vor Tracking
+### Szenario 3: Langzeit-Observation
+**Situation:** Wichtiges Ziel über mehrere Tage verfolgen
+**Lösung:** GPS-Tracker Permanent (7 Tage) → Maximale Überwachungsdauer
+
+### Szenario 4: Schutz vor Tracking
 **Situation:** Du vermutest Tracker am Auto
 **Lösung:** "Scannen" nutzen → Kostenlose Prüfung
-
-### Szenario 4: Profi-Job
-**Situation:** Wertvoller Transport
-**Lösung:** GPS-Tracker Advanced (15 Min) + Backup-Tracker
 
 ## 📈 Strategie-Tipps
 

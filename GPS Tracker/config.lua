@@ -1,37 +1,30 @@
 Config = {}
 
 -- GPS Tracker Typen mit verschiedenen Laufzeiten und Preisen
+-- Illegales Tracking-System mit realistischen Laufzeiten
 Config.TrackerTypes = {
     {
-        item = 'gps_tracker_basic',          -- Item-Name im Inventar
-        label = 'GPS-Tracker Basic',         -- Anzeigename
-        duration = 300,                      -- 5 Minuten
-        price = 2500,                        -- Preis beim Kauf (optional, für Shop-Integration)
-        description = '5 Min. Laufzeit - Gut für schnelle Jobs',
+        item = 'gps_tracker_1h',             -- Item-Name im Inventar
+        label = 'GPS-Tracker 1 Stunde',     -- Anzeigename
+        duration = 3600,                     -- 1 Stunde (60 Minuten)
+        price = 10000,                       -- Preis beim Kauf (Schwarzmarkt)
+        description = '1 Std. Echtzeit - Kurzzeitüberwachung',
         icon = '⏱️'
     },
     {
-        item = 'gps_tracker_standard',
-        label = 'GPS-Tracker Standard',
-        duration = 600,                      -- 10 Minuten
-        price = 5000,
-        description = '10 Min. Laufzeit - Solider Standard',
-        icon = '📍'
+        item = 'gps_tracker_24h',
+        label = 'GPS-Tracker 24 Stunden',
+        duration = 86400,                    -- 24 Stunden (1 Tag)
+        price = 25000,
+        description = '1 Tag Echtzeit - Ganztägige Überwachung',
+        icon = '📅'
     },
     {
-        item = 'gps_tracker_advanced',
-        label = 'GPS-Tracker Advanced',
-        duration = 900,                      -- 15 Minuten
-        price = 8000,
-        description = '15 Min. Laufzeit - Für längere Verfolgungen',
-        icon = '🎯'
-    },
-    {
-        item = 'gps_tracker_premium',
-        label = 'GPS-Tracker Premium',
-        duration = 1800,                     -- 30 Minuten
-        price = 15000,
-        description = '30 Min. Laufzeit - Top-Qualität',
+        item = 'gps_tracker_permanent',
+        label = 'GPS-Tracker Permanent',
+        duration = 604800,                   -- 7 Tage (praktisch permanent)
+        price = 50000,
+        description = 'Dauer-Tracking - Langzeit-Überwachung',
         icon = '💎'
     }
 }

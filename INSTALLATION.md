@@ -12,46 +12,35 @@
 Öffne die Datei `ox_inventory/data/items.lua` und füge folgende Items hinzu (siehe auch `mtj_gps_tracker/reference/items.lua`):
 
 ```lua
--- GPS Tracker Items
-['gps_tracker_basic'] = {
-    label = 'GPS-Tracker Basic',
-    weight = 150,
-    stack = true,
-    close = true,
-    description = 'Ein einfacher GPS-Tracker mit 5 Minuten Laufzeit. Perfekt für schnelle Verfolgungen.',
-    client = {
-        image = 'gps_tracker.png',
-    }
-},
-
-['gps_tracker_standard'] = {
-    label = 'GPS-Tracker Standard',
+-- GPS Tracker Items (Illegales System)
+['gps_tracker_1h'] = {
+    label = 'GPS-Tracker 1 Stunde',
     weight = 200,
     stack = true,
     close = true,
-    description = 'Ein solider GPS-Tracker mit 10 Minuten Laufzeit. Der bewährte Standard.',
+    description = 'Illegaler GPS-Tracker mit 1 Stunde Laufzeit. Kurzzeitüberwachung für schnelle Jobs.',
     client = {
         image = 'gps_tracker.png',
     }
 },
 
-['gps_tracker_advanced'] = {
-    label = 'GPS-Tracker Advanced',
+['gps_tracker_24h'] = {
+    label = 'GPS-Tracker 24 Stunden',
     weight = 250,
     stack = true,
     close = true,
-    description = 'Ein verbesserter GPS-Tracker mit 15 Minuten Laufzeit. Für längere Verfolgungen.',
+    description = 'Illegaler GPS-Tracker mit 24 Stunden Laufzeit. Perfekt für ganztägige Überwachung.',
     client = {
         image = 'gps_tracker.png',
     }
 },
 
-['gps_tracker_premium'] = {
-    label = 'GPS-Tracker Premium',
+['gps_tracker_permanent'] = {
+    label = 'GPS-Tracker Permanent',
     weight = 300,
     stack = true,
     close = true,
-    description = 'Ein Premium GPS-Tracker mit 30 Minuten Laufzeit. Top-Qualität für professionelle Überwachung.',
+    description = 'Illegaler GPS-Tracker mit Dauer-Funktion. Langzeit-Überwachung (7 Tage).',
     client = {
         image = 'gps_tracker.png',
     }
@@ -77,38 +66,37 @@ Erstelle oder füge folgende Bilder hinzu:
 
 Falls du keine eigenen Bilder hast, kannst du temporär ein Platzhalter-Bild verwenden.
 
-### 4. Shop einrichten (Optional aber empfohlen)
+### 4. Shop einrichten (Schwarzmarkt empfohlen!)
 
 #### Option A: ox_inventory Shop
 
 Öffne `ox_inventory/data/shops.lua` und füge hinzu (siehe auch `mtj_gps_tracker/reference/shop.lua`):
 
 ```lua
-["gps_shop"] = {
-    name = "GPS & Elektronik",
+["gps_blackmarket"] = {
+    name = "Schwarzmarkt - GPS Tracker",
     blip = {
         id = 521, 
-        colour = 3, 
-        scale = 0.8
+        colour = 1,  -- Rot für Schwarzmarkt
+        scale = 0.7
     },
     inventory = {
-        { name = 'gps_tracker_basic', price = 2500 },
-        { name = 'gps_tracker_standard', price = 5000 },
-        { name = 'gps_tracker_advanced', price = 8000 },
-        { name = 'gps_tracker_premium', price = 15000 },
-        { name = 'gps_remover', price = 3000 }
+        { name = 'gps_tracker_1h', price = 10000 },
+        { name = 'gps_tracker_24h', price = 25000 },
+        { name = 'gps_tracker_permanent', price = 50000 },
+        { name = 'gps_remover', price = 5000 }
     },
     locations = {
-        vec3(-656.95, -858.03, 24.5)  -- Beispiel-Position
+        vec3(707.85, -966.88, 30.41)  -- Schwarzmarkt-Position
     },
     targets = {
         { 
-            loc = vec3(-656.95, -858.03, 24.5), 
+            loc = vec3(707.85, -966.88, 30.41), 
             length = 0.5, 
             width = 0.5, 
             heading = 0.0, 
-            minZ = 24.0, 
-            maxZ = 25.0, 
+            minZ = 29.5, 
+            maxZ = 31.0, 
             distance = 2.5 
         }
     }
@@ -117,12 +105,11 @@ Falls du keine eigenen Bilder hast, kannst du temporär ein Platzhalter-Bild ver
 
 #### Option B: Eigenes Shop-System
 
-Nutze die Preise aus `config.lua`:
-- GPS-Tracker Basic: 2.500€
-- GPS-Tracker Standard: 5.000€
-- GPS-Tracker Advanced: 8.000€
-- GPS-Tracker Premium: 15.000€
-- GPS Remover: 3.000€
+Nutze die Preise aus `config.lua` (Schwarzmarkt-Preise):
+- GPS-Tracker 1 Stunde: 10.000€
+- GPS-Tracker 24 Stunden: 25.000€
+- GPS-Tracker Permanent: 50.000€
+- GPS Remover: 5.000€
 
 ### 5. Server.cfg aktualisieren
 
@@ -154,8 +141,9 @@ restart mtj_gps_tracker
 ### Test 1: Items im Inventar
 1. Gib dir Items mit Admin-Befehlen:
    ```
-   /giveitem [dein_name] gps_tracker_basic 5
-   /giveitem [dein_name] gps_tracker_standard 3
+   /giveitem [dein_name] gps_tracker_1h 3
+   /giveitem [dein_name] gps_tracker_24h 2
+   /giveitem [dein_name] gps_tracker_permanent 1
    /giveitem [dein_name] gps_remover 2
    ```
 

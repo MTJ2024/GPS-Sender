@@ -1,14 +1,13 @@
 # GPS-Sender / GPS-Tracker System für ESX Legacy FiveM RP
 
-Ein professionelles GPS-Tracker-System für ESX Legacy mit mehreren Tracker-Typen, unterschiedlichen Laufzeiten und Preisen.
+Ein professionelles **illegales** GPS-Tracker-System für ESX Legacy mit realistischen Laufzeiten und Schwarzmarkt-Preisen.
 
 ## Features
 
-✅ **Mehrere Tracker-Typen** mit verschiedenen Laufzeiten:
-- 🏃 **Basic** - 5 Minuten (2.500€)
-- 📍 **Standard** - 10 Minuten (5.000€)
-- 🎯 **Advanced** - 15 Minuten (8.000€)
-- 💎 **Premium** - 30 Minuten (15.000€)
+✅ **3 Tracker-Typen** mit realistischen Laufzeiten:
+- ⏱️ **1 Stunde** - 60 Minuten Echtzeit (10.000€)
+- 📅 **24 Stunden** - 1 Tag Echtzeit (25.000€)
+- 💎 **Permanent** - 7 Tage Dauerüberwachung (50.000€)
 
 ✅ **Interaktives UI** mit Timer-Anzeige und RP-Texten  
 ✅ **ox_target** Integration für intuitive Bedienung  
@@ -17,6 +16,7 @@ Ein professionelles GPS-Tracker-System für ESX Legacy mit mehreren Tracker-Type
 ✅ **ESX Legacy 1.12+** optimiert  
 ✅ **GPS Remover Tool** zum Entfernen von Trackern  
 ✅ **Admin-Befehle** zum Force-Remove  
+✅ **Schwarzmarkt-System** mit höheren Preisen für illegale Überwachung
 
 ## Installation
 
@@ -27,14 +27,15 @@ Ein professionelles GPS-Tracker-System für ESX Legacy mit mehreren Tracker-Type
 
 ### 2. Items zu ox_inventory hinzufügen
 Öffne `ox_inventory/data/items.lua` und füge die Items aus `reference/items.lua` hinzu:
-- `gps_tracker_basic`
-- `gps_tracker_standard`
-- `gps_tracker_advanced`
-- `gps_tracker_premium`
-- `gps_remover`
+- `gps_tracker_1h` - 1 Stunde Tracker
+- `gps_tracker_24h` - 24 Stunden Tracker
+- `gps_tracker_permanent` - Permanent Tracker
+- `gps_remover` - GPS Remover Tool
 
 ### 3. Shop einrichten (Optional)
 Füge die GPS-Tracker zu deinem Shop-System hinzu. Beispielkonfiguration findest du in `reference/shop.lua`.
+
+**Hinweis:** Für ein illegales System sollten die Tracker im Schwarzmarkt verkauft werden!
 
 Für ox_inventory shops:
 - Öffne `ox_inventory/data/shops.lua`
@@ -85,13 +86,29 @@ Alle Einstellungen findest du in `config.lua`:
 ```lua
 Config.TrackerTypes = {
     {
-        item = 'gps_tracker_basic',
-        label = 'GPS-Tracker Basic',
-        duration = 300,  -- 5 Minuten in Sekunden
-        price = 2500,
-        description = '5 Min. Laufzeit - Gut für schnelle Jobs',
+        item = 'gps_tracker_1h',
+        label = 'GPS-Tracker 1 Stunde',
+        duration = 3600,  -- 1 Stunde (60 Minuten)
+        price = 10000,
+        description = '1 Std. Echtzeit - Kurzzeitüberwachung',
         icon = '⏱️'
     },
+    {
+        item = 'gps_tracker_24h',
+        label = 'GPS-Tracker 24 Stunden',
+        duration = 86400,  -- 24 Stunden (1 Tag)
+        price = 25000,
+        description = '1 Tag Echtzeit - Ganztägige Überwachung',
+        icon = '📅'
+    },
+    {
+        item = 'gps_tracker_permanent',
+        label = 'GPS-Tracker Permanent',
+        duration = 604800,  -- 7 Tage (praktisch permanent)
+        price = 50000,
+        description = 'Dauer-Tracking - Langzeit-Überwachung',
+        icon = '💎'
+    }
     -- ... weitere Tracker-Typen
 }
 ```

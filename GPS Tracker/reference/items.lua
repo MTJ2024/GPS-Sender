@@ -1,49 +1,38 @@
 -- GPS Tracker Items für ox_inventory
 -- Diese Items sollten zu eurer ox_inventory/data/items.lua hinzugefügt werden
+-- Illegales Tracking-System mit realistischen Laufzeiten
 
--- GPS Tracker Basic (5 Minuten)
-['gps_tracker_basic'] = {
-    label = 'GPS-Tracker Basic',
-    weight = 150,
-    stack = true,
-    close = true,
-    description = 'Ein einfacher GPS-Tracker mit 5 Minuten Laufzeit. Perfekt für schnelle Verfolgungen.',
-    client = {
-        image = 'gps_tracker.png',
-    }
-},
-
--- GPS Tracker Standard (10 Minuten)
-['gps_tracker_standard'] = {
-    label = 'GPS-Tracker Standard',
+-- GPS Tracker 1 Stunde
+['gps_tracker_1h'] = {
+    label = 'GPS-Tracker 1 Stunde',
     weight = 200,
     stack = true,
     close = true,
-    description = 'Ein solider GPS-Tracker mit 10 Minuten Laufzeit. Der bewährte Standard.',
+    description = 'Illegaler GPS-Tracker mit 1 Stunde Laufzeit. Kurzzeitüberwachung für schnelle Jobs.',
     client = {
         image = 'gps_tracker.png',
     }
 },
 
--- GPS Tracker Advanced (15 Minuten)
-['gps_tracker_advanced'] = {
-    label = 'GPS-Tracker Advanced',
+-- GPS Tracker 24 Stunden
+['gps_tracker_24h'] = {
+    label = 'GPS-Tracker 24 Stunden',
     weight = 250,
     stack = true,
     close = true,
-    description = 'Ein verbesserter GPS-Tracker mit 15 Minuten Laufzeit. Für längere Verfolgungen.',
+    description = 'Illegaler GPS-Tracker mit 24 Stunden Laufzeit. Perfekt für ganztägige Überwachung.',
     client = {
         image = 'gps_tracker.png',
     }
 },
 
--- GPS Tracker Premium (30 Minuten)
-['gps_tracker_premium'] = {
-    label = 'GPS-Tracker Premium',
+-- GPS Tracker Permanent
+['gps_tracker_permanent'] = {
+    label = 'GPS-Tracker Permanent',
     weight = 300,
     stack = true,
     close = true,
-    description = 'Ein Premium GPS-Tracker mit 30 Minuten Laufzeit. Top-Qualität für professionelle Überwachung.',
+    description = 'Illegaler GPS-Tracker mit Dauer-Funktion. Langzeit-Überwachung (7 Tage).',
     client = {
         image = 'gps_tracker.png',
     }
