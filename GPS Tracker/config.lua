@@ -30,7 +30,7 @@ Config.TrackerTypes = {
 }
 
 -- GPS Remover Preis (optional, für Shop-Integration)
-Config.RemoverPrice = 3000
+Config.RemoverPrice = 5000
 
 -- Animation beim Anbringen/Entfernen
 Config.AttachAnimation = {

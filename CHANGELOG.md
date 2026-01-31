@@ -2,6 +2,52 @@
 
 Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert.
 
+## [2.1.0] - 2026-01-31
+
+### 🔄 Breaking Changes
+- **Komplett neue Tracker-Typen**: Wechsel von 4 zu 3 Tracker-Typen mit realistischen Laufzeiten
+- **Item-Namen geändert**: Alte Items (basic, standard, advanced, premium) entfernt
+- **Neue Items**: gps_tracker_1h, gps_tracker_24h, gps_tracker_permanent
+- **Preise stark erhöht**: Anpassung für illegales Schwarzmarkt-System
+
+### ✨ Neue Features
+- **Illegales System**: GPS-Tracker als Schwarzmarkt-Ware mit höheren Preisen
+- **Realistische Laufzeiten**: 1 Stunde, 24 Stunden, 7 Tage (permanent)
+- **Schwarzmarkt-Integration**: Shop-Konfiguration für illegalen Handel
+- **Langzeit-Überwachung**: Bis zu 7 Tage Dauertracking möglich
+
+### 🔧 Änderungen
+
+#### Tracker-Typen
+**Entfernt:**
+- ❌ GPS-Tracker Basic (5 Min, 2.500€)
+- ❌ GPS-Tracker Standard (10 Min, 5.000€)
+- ❌ GPS-Tracker Advanced (15 Min, 8.000€)
+- ❌ GPS-Tracker Premium (30 Min, 15.000€)
+
+**Hinzugefügt:**
+- ✅ GPS-Tracker 1 Stunde (60 Min, 10.000€)
+- ✅ GPS-Tracker 24 Stunden (1 Tag, 25.000€)
+- ✅ GPS-Tracker Permanent (7 Tage, 50.000€)
+
+#### Preise
+- GPS Remover: 3.000€ → 5.000€ (erhöht)
+- Alle Tracker deutlich teurer (Schwarzmarkt-Aufschlag)
+
+### 📚 Dokumentation
+- Alle Dokumentation auf neues System aktualisiert
+- MIGRATION_GUIDE.md für Übergang von v2.0.0 zu v2.1.0
+- README, INSTALLATION, QUICK_REFERENCE komplett überarbeitet
+- Schwarzmarkt-Thematik in allen Texten integriert
+
+### 💡 Begründung
+- **Realismus**: 5-30 Minuten sind unrealistisch für echte Überwachung
+- **RP-Qualität**: Illegales System bietet mehr RP-Möglichkeiten
+- **Wirtschaft**: Höhere Preise verhindern Spam und verbessern Balance
+- **Spielerfahrung**: Klare Unterschiede zwischen Tracker-Typen
+
+---
+
 ## [2.0.0] - 2026-01-31
 
 ### ✨ Neue Features

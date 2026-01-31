@@ -4,8 +4,8 @@ game 'gta5'
 lua54 'yes'
 
 author 'MTJ2024'
-description 'GPS Tracker Script für ESX Legacy 1.12+ mit mehreren Tracker-Typen und Preisstufen'
-version '2.0.0'
+description 'Illegales GPS Tracker Script für ESX Legacy 1.12+ - Schwarzmarkt-System mit realistischen Laufzeiten'
+version '2.1.0'
 
 shared_scripts {
     '@ox_lib/init.lua',
