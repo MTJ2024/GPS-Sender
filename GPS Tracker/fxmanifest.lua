@@ -4,11 +4,12 @@ game 'gta5'
 lua54 'yes'
 
 author 'MTJ2024'
-description 'GPS Tracker Script für ESX Legacy 1.12+ und ox_target mit UI'
-version '1.0.0'
+description 'GPS Tracker Script für ESX Legacy 1.12+ mit mehreren Tracker-Typen und Preisstufen'
+version '2.0.0'
 
 shared_scripts {
-    '@ox_lib/init.lua'
+    '@ox_lib/init.lua',
+    'config.lua'
 }
 
 client_scripts {

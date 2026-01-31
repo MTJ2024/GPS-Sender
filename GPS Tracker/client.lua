@@ -118,13 +118,41 @@ exports.ox_target:addGlobalVehicle({
             local netId = NetworkGetNetworkIdFromEntity(ent)
             ESX.TriggerServerCallback('mtj_gps:canAttach', function(canAttach)
                 if canAttach then
-                    playTrackerUiAnimation{
-                        title = "🔧 Du schiebst den GPS-Tracker tief ins Motorblock-Versteck.<br><i>Hoffentlich merkt das keiner ...</i>",
-                        duration = 10000,
-                        finishTitle = "✅ <b>GPS-Tracker installiert!</b><br><span style='color:#5fff77'>Niemand scheint dich bemerkt zu haben.</span>",
-                        finishStatus = "success"
-                    }
-                    TriggerServerEvent('mtj_gps:attachTracker', netId)
+                    -- Hole verfügbare Tracker vom Server
+                    ESX.TriggerServerCallback('mtj_gps:getAvailableTrackers', function(availableTrackers)
+                        if #availableTrackers == 0 then
+                            showInfo("❌ <b>Keine GPS-Tracker!</b><br><span style='color:#ff4a4a'>Du hast keinen Tracker im Inventar.</span>", "red")
+                            return
+                        end
+
+                        -- Erstelle Menü-Optionen
+                        local menuOptions = {}
+                        for _, tracker in ipairs(availableTrackers) do
+                            local minutes = math.floor(tracker.duration / 60)
+                            table.insert(menuOptions, {
+                                title = tracker.icon .. ' ' .. tracker.label,
+                                description = tracker.description .. ' | Anzahl: ' .. tracker.count,
+                                icon = 'location-dot',
+                                onSelect = function()
+                                    playTrackerUiAnimation{
+                                        title = "🔧 Du schiebst den " .. tracker.label .. " tief ins Motorblock-Versteck.<br><i>Hoffentlich merkt das keiner ...</i>",
+                                        duration = 10000,
+                                        finishTitle = "✅ <b>GPS-Tracker installiert!</b><br><span style='color:#5fff77'>Niemand scheint dich bemerkt zu haben.</span>",
+                                        finishStatus = "success"
+                                    }
+                                    TriggerServerEvent('mtj_gps:attachTracker', netId, tracker.item)
+                                end
+                            })
+                        end
+
+                        -- Zeige Auswahl-Menü mit ox_lib
+                        lib.registerContext({
+                            id = 'gps_tracker_menu',
+                            title = '📍 GPS-Tracker auswählen',
+                            options = menuOptions
+                        })
+                        lib.showContext('gps_tracker_menu')
+                    end)
                 else
                     showInfo("❌ <b>Achtung:</b> Hier ist bereits ein Tracker installiert.<br><span style='color:#ff4a4a'>Riskier nicht zu viel ...</span>", "red")
                 end
