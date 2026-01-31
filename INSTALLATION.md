@@ -9,7 +9,7 @@
 
 ### 2. Items zu ox_inventory hinzufügen
 
-Öffne die Datei `ox_inventory/data/items.lua` und füge folgende Items hinzu:
+Öffne die Datei `ox_inventory/data/items.lua` und füge folgende Items hinzu (siehe auch `mtj_gps_tracker/reference/items.lua`):
 
 ```lua
 -- GPS Tracker Items
@@ -81,7 +81,7 @@ Falls du keine eigenen Bilder hast, kannst du temporär ein Platzhalter-Bild ver
 
 #### Option A: ox_inventory Shop
 
-Öffne `ox_inventory/data/shops.lua` und füge hinzu:
+Öffne `ox_inventory/data/shops.lua` und füge hinzu (siehe auch `mtj_gps_tracker/reference/shop.lua`):
 
 ```lua
 ["gps_shop"] = {

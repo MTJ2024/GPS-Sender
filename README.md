@@ -26,7 +26,7 @@ Ein professionelles GPS-Tracker-System für ESX Legacy mit mehreren Tracker-Type
 ```
 
 ### 2. Items zu ox_inventory hinzufügen
-Öffne `ox_inventory/data/items.lua` und füge die Items aus `items.lua` hinzu:
+Öffne `ox_inventory/data/items.lua` und füge die Items aus `reference/items.lua` hinzu:
 - `gps_tracker_basic`
 - `gps_tracker_standard`
 - `gps_tracker_advanced`
@@ -34,11 +34,11 @@ Ein professionelles GPS-Tracker-System für ESX Legacy mit mehreren Tracker-Type
 - `gps_remover`
 
 ### 3. Shop einrichten (Optional)
-Füge die GPS-Tracker zu deinem Shop-System hinzu. Beispielkonfiguration findest du in `shop.lua`.
+Füge die GPS-Tracker zu deinem Shop-System hinzu. Beispielkonfiguration findest du in `reference/shop.lua`.
 
 Für ox_inventory shops:
 - Öffne `ox_inventory/data/shops.lua`
-- Füge den GPS-Shop aus `shop.lua` hinzu
+- Füge den GPS-Shop aus `reference/shop.lua` hinzu
 
 ### 4. Server.cfg anpassen
 ```lua

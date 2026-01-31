@@ -43,11 +43,12 @@ Das GPS-Tracker-System wurde von einem einfachen "Ein-Tracker-Typ"-System zu ein
 - ✅ Gewichte und Beschreibungen für jedes Item
 - ✅ Stack-fähig für einfache Verwaltung
 
-#### 5. Shop-Integration (`shop.lua`)
+#### 5. Shop-Integration (`shop.lua` -> `reference/shop.lua`)
 - ✅ Fertige ox_inventory Shop-Konfiguration
 - ✅ Gestaffelte Preise entsprechend der Qualität
 - ✅ Beispiel-Positionen für Shops
 - ✅ Blip-Konfiguration inklusive
+- ✅ Als Referenz-Datei für Integration in bestehende Shops
 
 ### 📚 Dokumentation
 
@@ -228,8 +229,9 @@ GPS-Sender/
 │   ├── server.lua          ← Server-seitige Logik + Callbacks
 │   ├── config.lua          ← Zentrale Konfiguration (NEU)
 │   ├── fxmanifest.lua      ← Manifest mit Config-Import
-│   ├── items.lua           ← Item-Definitionen (NEU)
-│   ├── shop.lua            ← Shop-Konfiguration (NEU)
+│   ├── reference/          ← Referenz-Dateien für Integration (NEU)
+│   │   ├── items.lua       ← Item-Definitionen für ox_inventory
+│   │   └── shop.lua        ← Shop-Konfiguration
 │   └── html/
 │       ├── index.html      ← UI-Struktur
 │       ├── ui.css          ← UI-Styling

@@ -24,8 +24,8 @@ Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert
 - Umfangreiches README mit Feature-Übersicht
 - Detaillierte INSTALLATION.md mit Schritt-für-Schritt-Anleitung
 - QUICK_REFERENCE.md für schnelle Benutzer-Hilfe
-- items.lua mit allen Item-Definitionen
-- shop.lua mit Shop-Konfiguration
+- `reference/items.lua` mit allen Item-Definitionen
+- `reference/shop.lua` mit Shop-Konfiguration
 - items.sql als Referenz
 
 ### 🎨 Konfiguration
