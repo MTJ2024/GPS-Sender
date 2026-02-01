@@ -57,9 +57,11 @@ restart mtj_gps_tracker
 
 ## Nutzung
 
+**📋 Vollständige Befehlsliste:** Siehe [COMMANDS.md](COMMANDS.md)
+
 ### Tracker anbringen
 1. Gehe zu einem Fahrzeug
-2. Öffne das ox_target Menü (Standard: Alt)
+2. Öffne das ox_target Menü (Standard: `Alt`)
 3. Wähle "GPS-Tracker anbringen"
 4. Wähle den gewünschten Tracker-Typ aus dem Menü
 5. Warte 10 Sekunden während der Animation

@@ -85,6 +85,10 @@ restart mtj_gps_tracker
 
 ## Verwendung
 
+**📋 Vollständige Befehlsliste:** Siehe [COMMANDS.md](COMMANDS.md)
+
+### Schnellstart:
+
 1. GPS-Tracker im Inventar haben
 2. Zu einem Fahrzeug gehen
 3. Alt drücken (ox_target)
@@ -92,6 +96,11 @@ restart mtj_gps_tracker
 5. Tracker-Typ aus Menü wählen
 6. 10 Sekunden warten
 7. Tracker ist aktiv!
+
+### Alle verfügbaren Aktionen:
+- **GPS-Tracker anbringen** - Tracker am Fahrzeug installieren (benötigt Tracker-Item)
+- **GPS-Tracker entfernen** - Tracker entfernen (benötigt GPS Remover Tool)
+- **GPS-Tracker scannen** - Fahrzeug auf Tracker prüfen (kostenlos!)
 
 ## Support
 
