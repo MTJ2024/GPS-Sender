@@ -2,6 +2,47 @@
 
 Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert.
 
+## [2.1.2] - 2026-02-04
+
+### 🔒 Item Requirements hinzugefügt
+- **WICHTIG:** Alle Aktionen erfordern jetzt die entsprechenden Items im Inventar
+- ox_target Optionen erscheinen nur noch wenn Spieler die Items hat
+
+### 🔧 Änderungen
+
+#### GPS-Tracker anbringen
+- **Vorher:** Menü immer sichtbar, Fehler erst beim Klick
+- **Jetzt:** Menü nur sichtbar wenn Spieler GPS-Tracker hat
+- **Erforderlich:** `gps_tracker_1h` ODER `gps_tracker_24h` ODER `gps_tracker_permanent`
+
+#### GPS-Tracker entfernen  
+- **Vorher:** Menü sichtbar wenn Tracker am Fahrzeug
+- **Jetzt:** Menü nur sichtbar wenn Spieler GPS Remover Tool hat
+- **Erforderlich:** `gps_remover`
+
+#### GPS-Tracker scannen
+- **Vorher:** Immer verfügbar (kostenlos)
+- **Jetzt:** Erfordert GPS Remover Tool
+- **Erforderlich:** `gps_remover`
+- **Breaking Change!** Scannen ist nicht mehr kostenlos
+
+### 🆕 Neue Features
+- Inventar-Cache System für Performance
+- Server-Callbacks für Inventar-Checks
+- Automatische Aktualisierung alle 2 Sekunden
+
+### 📚 Technische Details
+**Server (server.lua):**
+- `mtj_gps:hasAnyTracker` - Prüft ob Spieler GPS-Tracker hat
+- `mtj_gps:hasRemover` - Prüft ob Spieler GPS Remover hat
+
+**Client (client.lua):**
+- Inventar-Cache mit automatischer Aktualisierung
+- canInteract Funktionen verwenden Cache
+- Bessere Performance durch weniger Callbacks
+
+---
+
 ## [2.1.1] - 2026-02-04
 
 ### 🐛 Critical Bugfixes

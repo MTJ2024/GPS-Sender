@@ -5,6 +5,30 @@ local myBlips = {}
 local trackerTimers = {}
 local trackerThreads = {}
 
+-- Cache für Inventar-Status (für canInteract Performance)
+local inventoryCache = {
+    hasTracker = false,
+    hasRemover = false,
+    lastUpdate = 0
+}
+
+-- Update Inventar-Cache regelmäßig
+CreateThread(function()
+    while true do
+        Wait(2000) -- Alle 2 Sekunden aktualisieren
+        
+        ESX.TriggerServerCallback('mtj_gps:hasAnyTracker', function(hasTracker)
+            inventoryCache.hasTracker = hasTracker
+            inventoryCache.lastUpdate = GetGameTimer()
+        end)
+        
+        ESX.TriggerServerCallback('mtj_gps:hasRemover', function(hasRemover)
+            inventoryCache.hasRemover = hasRemover
+        end)
+    end
+end)
+
+
 -- Helper: Info-Panel (wie im Shuttle-UI)
 function showInfo(message, color)
     -- Immer mindestens 3 Sekunden anzeigen!
@@ -168,7 +192,8 @@ CreateThread(function()
             end,
             canInteract = function(entity)
                 local netId = NetworkGetNetworkIdFromEntity(entity)
-                return not trackerTimers[netId]
+                -- Nur wenn kein Tracker am Fahrzeug UND Spieler hat mindestens einen Tracker
+                return not trackerTimers[netId] and inventoryCache.hasTracker
             end
         },
         {
@@ -187,7 +212,8 @@ CreateThread(function()
             end,
             canInteract = function(entity)
                 local netId = NetworkGetNetworkIdFromEntity(entity)
-                return trackerTimers[netId]
+                -- Nur wenn Tracker am Fahrzeug UND Spieler hat Remover Tool
+                return trackerTimers[netId] and inventoryCache.hasRemover
             end
         },
         {
@@ -212,6 +238,10 @@ CreateThread(function()
                         showInfo("❌ <b>Kein Tracker gefunden.</b><br>Aber sicher ist sicher – lieber weiter beobachten ...", "grey")
                     end
                 end)
+            end,
+            canInteract = function(entity)
+                -- Scannen erfordert GPS Remover Tool (zum Scannen und ggf. Entfernen)
+                return inventoryCache.hasRemover
             end
         }
     })

@@ -6,6 +6,31 @@ ESX.RegisterServerCallback('mtj_gps:canAttach', function(source, cb, netId)
     cb(not trackedVehicles[netId])
 end)
 
+-- Prüfe ob Spieler mindestens einen GPS-Tracker hat
+ESX.RegisterServerCallback('mtj_gps:hasAnyTracker', function(source, cb)
+    local xPlayer = ESX.GetPlayerFromId(source)
+    if not xPlayer then 
+        cb(false)
+        return 
+    end
+    
+    -- Prüfe alle Tracker-Typen
+    for _, trackerType in ipairs(Config.TrackerTypes) do
+        local count = exports.ox_inventory:GetItemCount(source, trackerType.item)
+        if count and count > 0 then
+            cb(true)
+            return
+        end
+    end
+    cb(false)
+end)
+
+-- Prüfe ob Spieler GPS Remover Tool hat
+ESX.RegisterServerCallback('mtj_gps:hasRemover', function(source, cb)
+    local count = exports.ox_inventory:GetItemCount(source, 'gps_remover')
+    cb(count and count > 0)
+end)
+
 -- Prüfe welche Tracker der Spieler besitzt
 ESX.RegisterServerCallback('mtj_gps:getAvailableTrackers', function(source, cb)
     local xPlayer = ESX.GetPlayerFromId(source)

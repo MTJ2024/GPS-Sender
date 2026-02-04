@@ -31,6 +31,10 @@ Um GPS-Tracker anzubringen oder zu entfernen, nutzt du **ox_target** (Standard: 
 - GPS-Blip erscheint auf der Karte
 - Timer startet (sichtbar links am Bildschirm)
 
+**💡 WICHTIG ab v2.1.2:**
+- Menü erscheint NUR wenn du mindestens einen GPS-Tracker im Inventar hast
+- Ohne Tracker im Inventar: Keine ox_target Option sichtbar
+
 ---
 
 #### 2️⃣ GPS-Tracker entfernen
@@ -54,6 +58,10 @@ Um GPS-Tracker anzubringen oder zu entfernen, nutzt du **ox_target** (Standard: 
 - Tracker-Blip verschwindet
 - Timer stoppt
 
+**💡 WICHTIG ab v2.1.2:**
+- Menü erscheint NUR wenn du GPS Remover Tool im Inventar hast
+- Ohne Remover: Keine ox_target Option sichtbar
+
 ---
 
 #### 3️⃣ GPS-Tracker scannen
@@ -63,7 +71,7 @@ Um GPS-Tracker anzubringen oder zu entfernen, nutzt du **ox_target** (Standard: 
 **Menü-Option:** `GPS-Tracker scannen`
 
 **Voraussetzungen:**
-- Keine! (Kostenlose Aktion)
+- GPS Remover Tool im Inventar haben (ab v2.1.2)
 
 **Ablauf:**
 1. Fahrzeug anvisieren (`Alt`)
@@ -72,8 +80,13 @@ Um GPS-Tracker anzubringen oder zu entfernen, nutzt du **ox_target** (Standard: 
 4. Ergebnis wird angezeigt
 
 **Ergebnis:**
-- **Tracker gefunden:** Wird automatisch entfernt
+- **Tracker gefunden:** Wird automatisch entfernt (Remover wird verbraucht)
 - **Kein Tracker:** Meldung "Kein Tracker gefunden"
+
+**💡 WICHTIG ab v2.1.2:**
+- Scannen ist NICHT mehr kostenlos!
+- Erfordert GPS Remover Tool im Inventar
+- Menü erscheint NUR mit Remover Tool
 
 ---
 
