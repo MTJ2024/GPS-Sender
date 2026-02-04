@@ -2,6 +2,32 @@
 
 Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert.
 
+## [2.1.1] - 2026-02-04
+
+### 🐛 Critical Bugfixes
+- **KRITISCH:** Syntax-Fehler in client.lua behoben (trailing "-" entfernt)
+- **KRITISCH:** ox_target Initialisierung komplett überarbeitet
+- Script konnte nicht geladen werden wegen Syntax-Fehler
+- ox_target wurde aufgerufen bevor es verfügbar war
+
+### 🔧 Änderungen
+- ox_target Export jetzt in CreateThread wrapper
+- Wartet auf ox_target Verfügbarkeit vor Registrierung
+- Erfolgs-Logging hinzugefügt für Debugging
+- Bessere Fehlerbehandlung
+
+### 📚 Dokumentation
+- TROUBLESHOOTING.md hinzugefügt
+- Komplette Diagnose-Schritte
+- Häufige Probleme und Lösungen
+
+### 💡 Behobene Probleme
+- "GPS geht nicht, target komplett außer Betrieb" → **BEHOBEN**
+- Script lädt jetzt korrekt
+- ox_target Menü erscheint wie erwartet
+
+---
+
 ## [2.1.0] - 2026-01-31
 
 ### 🔄 Breaking Changes
