@@ -1,14 +1,63 @@
 local ESX = exports['es_extended']:getSharedObject()
-local trackedVehicles = {} -- netId => source
-local TRACK_DURATION = 600 -- Sekunden (10 Minuten)
+local trackedVehicles = {} -- netId => {source, trackerType, duration}
 
 -- Prüfe, ob an das Fahrzeug ein Tracker angebracht werden kann
 ESX.RegisterServerCallback('mtj_gps:canAttach', function(source, cb, netId)
     cb(not trackedVehicles[netId])
 end)
 
+-- Prüfe ob Spieler mindestens einen GPS-Tracker hat
+ESX.RegisterServerCallback('mtj_gps:hasAnyTracker', function(source, cb)
+    local xPlayer = ESX.GetPlayerFromId(source)
+    if not xPlayer then 
+        cb(false)
+        return 
+    end
+    
+    -- Prüfe alle Tracker-Typen
+    for _, trackerType in ipairs(Config.TrackerTypes) do
+        local count = exports.ox_inventory:GetItemCount(source, trackerType.item)
+        if count and count > 0 then
+            cb(true)
+            return
+        end
+    end
+    cb(false)
+end)
+
+-- Prüfe ob Spieler GPS Remover Tool hat
+ESX.RegisterServerCallback('mtj_gps:hasRemover', function(source, cb)
+    local count = exports.ox_inventory:GetItemCount(source, 'gps_remover')
+    cb(count and count > 0)
+end)
+
+-- Prüfe welche Tracker der Spieler besitzt
+ESX.RegisterServerCallback('mtj_gps:getAvailableTrackers', function(source, cb)
+    local xPlayer = ESX.GetPlayerFromId(source)
+    if not xPlayer then 
+        cb({})
+        return 
+    end
+    
+    local availableTrackers = {}
+    for _, trackerType in ipairs(Config.TrackerTypes) do
+        local count = exports.ox_inventory:GetItemCount(source, trackerType.item)
+        if count and count > 0 then
+            table.insert(availableTrackers, {
+                item = trackerType.item,
+                label = trackerType.label,
+                duration = trackerType.duration,
+                description = trackerType.description,
+                icon = trackerType.icon,
+                count = count
+            })
+        end
+    end
+    cb(availableTrackers)
+end)
+
 -- Tracker anbringen
-RegisterNetEvent('mtj_gps:attachTracker', function(netId)
+RegisterNetEvent('mtj_gps:attachTracker', function(netId, trackerItem)
     local src = source
     if trackedVehicles[netId] then
         TriggerClientEvent('mtj_gps:uiShowEffect', src, {
@@ -24,8 +73,22 @@ RegisterNetEvent('mtj_gps:attachTracker', function(netId)
         return
     end
 
+    -- Finde den Tracker-Typ in der Config
+    local trackerConfig = nil
+    for _, trackerType in ipairs(Config.TrackerTypes) do
+        if trackerType.item == trackerItem then
+            trackerConfig = trackerType
+            break
+        end
+    end
+
+    if not trackerConfig then
+        TriggerClientEvent('mtj_gps:notify', src, '❌ Ungültiger Tracker-Typ!')
+        return
+    end
+
     -- Inventar-Check
-    local removed = exports.ox_inventory:RemoveItem(src, 'gps_tracker', 1)
+    local removed = exports.ox_inventory:RemoveItem(src, trackerItem, 1)
     if not removed then
         TriggerClientEvent('mtj_gps:uiShowEffect', src, {
             title = "Kein Tracker im Gepäck",
@@ -41,12 +104,17 @@ RegisterNetEvent('mtj_gps:attachTracker', function(netId)
     end
 
     -- Tracker aktivieren
-    trackedVehicles[netId] = src
+    local TRACK_DURATION = trackerConfig.duration
+    trackedVehicles[netId] = {
+        source = src,
+        trackerType = trackerItem,
+        duration = TRACK_DURATION
+    }
     TriggerClientEvent('mtj_gps:trackVehicle', src, netId, TRACK_DURATION)
 
     TriggerClientEvent('mtj_gps:uiShowEffect', src, {
         title = "GPS-Tracker scharfgestellt",
-        rpText = "🛰️ <b>Ein Tracker sitzt nun verborgen im Fahrzeug!</b><br>Jeder deiner Schritte wird live übertragen.<br><span id='trackerHint'>⚠️ Bleib vorsichtig, das Gerät funkt dauerhaft und kann entdeckt werden!</span>",
+        rpText = "🛰️ <b>Ein "..trackerConfig.label.." sitzt nun verborgen im Fahrzeug!</b><br>Jeder deiner Schritte wird live übertragen.<br><span id='trackerHint'>⚠️ Bleib vorsichtig, das Gerät funkt dauerhaft und kann entdeckt werden!</span>",
         status = "active",
         signal = "strong",
         time = string.format("%02d:%02d", math.floor(TRACK_DURATION/60), TRACK_DURATION%60),
@@ -56,22 +124,24 @@ RegisterNetEvent('mtj_gps:attachTracker', function(netId)
 
     -- Ablauf nach Zeit
     SetTimeout(TRACK_DURATION * 1000, function()
-        local trackerSrc = trackedVehicles[netId]
-        trackedVehicles[netId] = nil
-        if trackerSrc then
-            TriggerClientEvent('mtj_gps:removeBlip', trackerSrc, netId)
-            TriggerClientEvent('mtj_gps:uiShowEffect', trackerSrc, {
-                title = "Signal verloren",
-                rpText = "⏰ <b>Der Tracker gibt einen letzten Ping von sich.<br>Das Ziel ist jetzt wieder frei – du bist raus!</b>",
-                status = "inactive",
-                signal = "weak",
-                time = "00:00",
-                color = "#444444",
-                effect = "fadeInGray"
-            })
-            SetTimeout(4500, function()
-                TriggerClientEvent('mtj_gps:uiHide', trackerSrc)
-            end)
+        if trackedVehicles[netId] then
+            local trackerSrc = trackedVehicles[netId].source
+            trackedVehicles[netId] = nil
+            if trackerSrc then
+                TriggerClientEvent('mtj_gps:removeBlip', trackerSrc, netId)
+                TriggerClientEvent('mtj_gps:uiShowEffect', trackerSrc, {
+                    title = "Signal verloren",
+                    rpText = "⏰ <b>Der Tracker gibt einen letzten Ping von sich.<br>Das Ziel ist jetzt wieder frei – du bist raus!</b>",
+                    status = "inactive",
+                    signal = "weak",
+                    time = "00:00",
+                    color = "#444444",
+                    effect = "fadeInGray"
+                })
+                SetTimeout(4500, function()
+                    TriggerClientEvent('mtj_gps:uiHide', trackerSrc)
+                end)
+            end
         end
     end)
 end)
@@ -79,8 +149,8 @@ end)
 -- Tracker entfernen
 RegisterNetEvent('mtj_gps:removeTracker', function(netId)
     local src = source
-    local trackerSrc = trackedVehicles[netId]
-    if not trackerSrc then
+    local trackerData = trackedVehicles[netId]
+    if not trackerData then
         TriggerClientEvent('mtj_gps:uiShowEffect', src, {
             title = "Nichts zu holen",
             rpText = "ℹ️ <b>Kein GPS-Tracker gefunden.</b><br>Vielleicht war jemand schneller als du?",
@@ -110,6 +180,7 @@ RegisterNetEvent('mtj_gps:removeTracker', function(netId)
         return
     end
 
+    local trackerSrc = trackerData.source
     trackedVehicles[netId] = nil
     TriggerClientEvent('mtj_gps:removeBlip', trackerSrc, netId)
     TriggerClientEvent('mtj_gps:uiShowEffect', trackerSrc, {
@@ -141,8 +212,9 @@ end)
 -- Admin/Force-Entfernen
 RegisterNetEvent("gps:forceRemoveTracker", function(netId)
     local src = source
-    local trackerSrc = trackedVehicles[netId]
-    if trackerSrc then
+    local trackerData = trackedVehicles[netId]
+    if trackerData then
+        local trackerSrc = trackerData.source
         trackedVehicles[netId] = nil
         TriggerClientEvent('mtj_gps:removeBlip', trackerSrc, netId)
         TriggerClientEvent('mtj_gps:uiShowEffect', trackerSrc, {
