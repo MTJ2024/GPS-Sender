@@ -108,104 +108,114 @@ RegisterNetEvent('mtj_gps:notify', function(msg)
 end)
 
 -- OX_TARGET: GPS-Menü fürs Fahrzeug
-exports.ox_target:addGlobalVehicle({
-    {
-        label = 'GPS-Tracker anbringen',
-        icon = 'fa-solid fa-location-dot',
-        distance = 2.0,
-        onSelect = function(data)
-            local ent = data.entity
-            local netId = NetworkGetNetworkIdFromEntity(ent)
-            ESX.TriggerServerCallback('mtj_gps:canAttach', function(canAttach)
-                if canAttach then
-                    -- Hole verfügbare Tracker vom Server
-                    ESX.TriggerServerCallback('mtj_gps:getAvailableTrackers', function(availableTrackers)
-                        if #availableTrackers == 0 then
-                            showInfo("❌ <b>Keine GPS-Tracker!</b><br><span style='color:#ff4a4a'>Du hast keinen Tracker im Inventar.</span>", "red")
-                            return
-                        end
+-- Warte bis ox_target geladen ist
+CreateThread(function()
+    -- Warte auf ox_target
+    while GetResourceState('ox_target') ~= 'started' do
+        Wait(100)
+    end
+    
+    -- Registriere ox_target Optionen
+    exports.ox_target:addGlobalVehicle({
+        {
+            label = 'GPS-Tracker anbringen',
+            icon = 'fa-solid fa-location-dot',
+            distance = 2.0,
+            onSelect = function(data)
+                local ent = data.entity
+                local netId = NetworkGetNetworkIdFromEntity(ent)
+                ESX.TriggerServerCallback('mtj_gps:canAttach', function(canAttach)
+                    if canAttach then
+                        -- Hole verfügbare Tracker vom Server
+                        ESX.TriggerServerCallback('mtj_gps:getAvailableTrackers', function(availableTrackers)
+                            if #availableTrackers == 0 then
+                                showInfo("❌ <b>Keine GPS-Tracker!</b><br><span style='color:#ff4a4a'>Du hast keinen Tracker im Inventar.</span>", "red")
+                                return
+                            end
 
-                        -- Erstelle Menü-Optionen
-                        local menuOptions = {}
-                        for _, tracker in ipairs(availableTrackers) do
-                            local minutes = math.floor(tracker.duration / 60)
-                            table.insert(menuOptions, {
-                                title = tracker.icon .. ' ' .. tracker.label,
-                                description = tracker.description .. ' | Anzahl: ' .. tracker.count,
-                                icon = 'location-dot',
-                                onSelect = function()
-                                    playTrackerUiAnimation{
-                                        title = "🔧 Du schiebst den " .. tracker.label .. " tief ins Motorblock-Versteck.<br><i>Hoffentlich merkt das keiner ...</i>",
-                                        duration = 10000,
-                                        finishTitle = "✅ <b>GPS-Tracker installiert!</b><br><span style='color:#5fff77'>Niemand scheint dich bemerkt zu haben.</span>",
-                                        finishStatus = "success"
-                                    }
-                                    TriggerServerEvent('mtj_gps:attachTracker', netId, tracker.item)
-                                end
+                            -- Erstelle Menü-Optionen
+                            local menuOptions = {}
+                            for _, tracker in ipairs(availableTrackers) do
+                                local minutes = math.floor(tracker.duration / 60)
+                                table.insert(menuOptions, {
+                                    title = tracker.icon .. ' ' .. tracker.label,
+                                    description = tracker.description .. ' | Anzahl: ' .. tracker.count,
+                                    icon = 'location-dot',
+                                    onSelect = function()
+                                        playTrackerUiAnimation{
+                                            title = "🔧 Du schiebst den " .. tracker.label .. " tief ins Motorblock-Versteck.<br><i>Hoffentlich merkt das keiner ...</i>",
+                                            duration = 10000,
+                                            finishTitle = "✅ <b>GPS-Tracker installiert!</b><br><span style='color:#5fff77'>Niemand scheint dich bemerkt zu haben.</span>",
+                                            finishStatus = "success"
+                                        }
+                                        TriggerServerEvent('mtj_gps:attachTracker', netId, tracker.item)
+                                    end
+                                })
+                            end
+
+                            -- Zeige Auswahl-Menü mit ox_lib
+                            lib.registerContext({
+                                id = 'gps_tracker_menu',
+                                title = '📍 GPS-Tracker auswählen',
+                                options = menuOptions
                             })
-                        end
+                            lib.showContext('gps_tracker_menu')
+                        end)
+                    else
+                        showInfo("❌ <b>Achtung:</b> Hier ist bereits ein Tracker installiert.<br><span style='color:#ff4a4a'>Riskier nicht zu viel ...</span>", "red")
+                    end
+                end, netId)
+            end,
+            canInteract = function(entity)
+                local netId = NetworkGetNetworkIdFromEntity(entity)
+                return not trackerTimers[netId]
+            end
+        },
+        {
+            label = 'GPS-Tracker entfernen',
+            icon = 'fa-solid fa-location-xmark',
+            distance = 2.0,
+            onSelect = function(data)
+                playTrackerUiAnimation{
+                    title = "🛠️ Mit zittrigen Händen löst du vorsichtig den Tracker ...",
+                    duration = 10000,
+                    finishTitle = "✔️ <b>Tracker entfernt!</b><br><span style='color:#5fff77'>Zeit, die Szene zu verlassen.</span>",
+                    finishStatus = "success"
+                }
+                local netId = NetworkGetNetworkIdFromEntity(data.entity)
+                TriggerServerEvent('mtj_gps:removeTracker', netId)
+            end,
+            canInteract = function(entity)
+                local netId = NetworkGetNetworkIdFromEntity(entity)
+                return trackerTimers[netId]
+            end
+        },
+        {
+            label = 'GPS-Tracker scannen',
+            icon = 'fa-solid fa-magnifying-glass',
+            distance = 2.0,
+            onSelect = function(data)
+                playTrackerUiAnimation{
+                    title = "🔎 Du lauschst und suchst nach versteckter Elektronik ...",
+                    duration = 5000,
+                }
+                local netId = NetworkGetNetworkIdFromEntity(data.entity)
+                SetTimeout(5200, function()
+                    if trackerTimers[netId] then
+                        showInfo("✅ <b>Tracker entdeckt!</b><br>Jemand hat hier große Pläne ...", "grey")
+                        Citizen.Wait(2000)
+                        -- Tracker entfernen
+                        TriggerServerEvent('mtj_gps:removeTracker', netId)
+                        Citizen.Wait(500) -- kleiner Delay, um Event zu verarbeiten
+                        showInfo("✔️ <b>Tracker entfernt!</b><br><span style='color:#5fff77'>Zeit, die Szene zu verlassen.</span>", "success")
+                    else
+                        showInfo("❌ <b>Kein Tracker gefunden.</b><br>Aber sicher ist sicher – lieber weiter beobachten ...", "grey")
+                    end
+                end)
+            end
+        }
+    })
+    
+    print('^2[MTJ GPS] ox_target erfolgreich initialisiert!^0')
+end)
 
-                        -- Zeige Auswahl-Menü mit ox_lib
-                        lib.registerContext({
-                            id = 'gps_tracker_menu',
-                            title = '📍 GPS-Tracker auswählen',
-                            options = menuOptions
-                        })
-                        lib.showContext('gps_tracker_menu')
-                    end)
-                else
-                    showInfo("❌ <b>Achtung:</b> Hier ist bereits ein Tracker installiert.<br><span style='color:#ff4a4a'>Riskier nicht zu viel ...</span>", "red")
-                end
-            end, netId)
-        end,
-        canInteract = function(entity)
-            local netId = NetworkGetNetworkIdFromEntity(entity)
-            return not trackerTimers[netId]
-        end
-    },
-    {
-        label = 'GPS-Tracker entfernen',
-        icon = 'fa-solid fa-location-xmark',
-        distance = 2.0,
-        onSelect = function(data)
-            playTrackerUiAnimation{
-                title = "🛠️ Mit zittrigen Händen löst du vorsichtig den Tracker ...",
-                duration = 10000,
-                finishTitle = "✔️ <b>Tracker entfernt!</b><br><span style='color:#5fff77'>Zeit, die Szene zu verlassen.</span>",
-                finishStatus = "success"
-            }
-            local netId = NetworkGetNetworkIdFromEntity(data.entity)
-            TriggerServerEvent('mtj_gps:removeTracker', netId)
-        end,
-        canInteract = function(entity)
-            local netId = NetworkGetNetworkIdFromEntity(entity)
-            return trackerTimers[netId]
-        end
-    },
-    {
-        label = 'GPS-Tracker scannen',
-        icon = 'fa-solid fa-magnifying-glass',
-        distance = 2.0,
-        onSelect = function(data)
-            playTrackerUiAnimation{
-                title = "🔎 Du lauschst und suchst nach versteckter Elektronik ...",
-                duration = 5000,
-            }
-            local netId = NetworkGetNetworkIdFromEntity(data.entity)
-            SetTimeout(5200, function()
-                if trackerTimers[netId] then
-                    showInfo("✅ <b>Tracker entdeckt!</b><br>Jemand hat hier große Pläne ...", "grey")
-                    Citizen.Wait(2000)
-                    -- Tracker entfernen
-                    TriggerServerEvent('mtj_gps:removeTracker', netId)
-                    Citizen.Wait(500) -- kleiner Delay, um Event zu verarbeiten
-                    showInfo("✔️ <b>Tracker entfernt!</b><br><span style='color:#5fff77'>Zeit, die Szene zu verlassen.</span>", "success")
-                else
-                    showInfo("❌ <b>Kein Tracker gefunden.</b><br>Aber sicher ist sicher – lieber weiter beobachten ...", "grey")
-                end
-            end)
-        end
-    }
-})
-
--

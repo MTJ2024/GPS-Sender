@@ -5,7 +5,7 @@ lua54 'yes'
 
 author 'MTJ2024'
 description 'Illegales GPS Tracker Script für ESX Legacy 1.12+ - Schwarzmarkt-System mit realistischen Laufzeiten'
-version '2.1.0'
+version '2.1.1'
 
 shared_scripts {
     '@ox_lib/init.lua',
